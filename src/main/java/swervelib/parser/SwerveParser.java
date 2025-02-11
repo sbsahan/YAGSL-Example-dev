@@ -159,11 +159,11 @@ public class SwerveParser
    *                                   {@link SwerveMath#calculateMetersPerRotation(double, double, double)}.
    * @return {@link SwerveDrive} instance.
    */
-  public SwerveDrive createSwerveDrive(double maxSpeed, double angleMotorConversionFactor, double driveMotorConversion)
+  public SwerveDrive createSwerveDrive(double maxSpeed, double angleMotorConversionFactor, double driveMotorConversion, Pose2d initialPose)
   {
     physicalPropertiesJson.conversionFactors.angle.factor = angleMotorConversionFactor;
     physicalPropertiesJson.conversionFactors.drive.factor = driveMotorConversion;
-    return createSwerveDrive(maxSpeed, Pose2d.kZero);
+    return createSwerveDrive(maxSpeed, initialPose);
   }
 
   /**
