@@ -79,16 +79,14 @@ public class SwerveSubsystem extends SubsystemBase
   {
     // Configure the Telemetry before creating the SwerveDrive to avoid unnecessary objects being created.
     SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
-    double driveConversionFactor = SwerveMath.calculateMetersPerRotation(Units.inchesToMeters(3.7), 6.63, 1);
-    double steeringConversionFactor = SwerveMath.calculateDegreesPerSteeringRotation(4.66, Constants.STEER_ENCODER_RESOLUTION);
+    //double driveConversionFactor = SwerveMath.calculateMetersPerRotation(Units.inchesToMeters(3.7), 6.63, 1);
+    //double steeringConversionFactor = SwerveMath.calculateDegreesPerSteeringRotation(4.66, Constants.STEER_ENCODER_RESOLUTION);
 
 
     try
     {
       
-      swerveDrive = new SwerveParser(directory).createSwerveDrive(Constants.MAX_SPEED, steeringConversionFactor, driveConversionFactor, new Pose2d(new Translation2d(Meter.of(1),
-                                                                                                Meter.of(4)),
-                                                                              Rotation2d.fromDegrees(0)));
+      swerveDrive = new SwerveParser(directory).createSwerveDrive(Constants.MAX_SPEED);
     } catch (Exception e)
     {
       throw new RuntimeException(e);
