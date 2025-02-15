@@ -1,17 +1,17 @@
 {
   "drive": {
     "type": "krakenx60",
-    "id": 22,
+    "id": 11,
     "canbus": null
   },
   "angle": {
     "type": "talonsrx",
-    "id": 21,
+    "id": 10,
     "canbus": null
   },
   "encoder": {
     "type": "cancoder",
-    "id": 0,
+    "id": 12,
     "canbus": null
   },
   "inverted": {
