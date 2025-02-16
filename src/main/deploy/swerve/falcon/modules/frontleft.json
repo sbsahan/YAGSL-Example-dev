@@ -1,16 +1,16 @@
 {
   "drive": {
     "type": "talonfx",
-    "id": 50,
+    "id": 1,
     "canbus": null
   },
   "angle": {
     "type": "talonfx",
-    "id": 8,
+    "id": 2,
     "canbus": null
   },
   "encoder": {
-    "type": "cancoder",
+    "type": "ctre_mag",
     "id": 3,
     "canbus": null
   },

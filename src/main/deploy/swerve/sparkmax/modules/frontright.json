@@ -1,16 +1,16 @@
 {
   "drive": {
     "type": "krakenx60",
-    "id": 2,
+    "id": 3,
     "canbus": null
   },
   "angle": {
     "type": "sparkmax_brushed",
-    "id": 1,
+    "id": 4,
     "canbus": null
   },
   "encoder": {
-    "type": "cancoder",
+    "type": "ctre_mag",
     "id": 10,
     "canbus": null
   },

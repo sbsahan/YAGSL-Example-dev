@@ -1,7 +1,7 @@
 {
   "drive": {
     "type": "krakenx60",
-    "id": 5,
+    "id": 3,
     "canbus": null
   },
   "angle": {
@@ -10,16 +10,16 @@
     "canbus": null
   },
   "encoder": {
-    "type": "cancoder",
-    "id": 6,
+    "type": "talonsrx_pwm",
+    "id": null,
     "canbus": null
   },
   "inverted": {
     "drive": true,
     "angle": false
   },
-  "absoluteEncoderInverted": true,
-  "absoluteEncoderOffset": 0.003906,
+  "absoluteEncoderInverted": false,
+  "absoluteEncoderOffset": 201.533,
   "location": {
     "front": 10.79,
     "left": -10.83
