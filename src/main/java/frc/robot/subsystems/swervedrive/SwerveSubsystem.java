@@ -80,8 +80,8 @@ public class SwerveSubsystem extends SubsystemBase
   {
     // Configure the Telemetry before creating the SwerveDrive to avoid unnecessary objects being created.
     SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
-    //double driveConversionFactor = SwerveMath.calculateMetersPerRotation(Units.inchesToMeters(3.7), 6.63, 1);
-    //double steeringConversionFactor = SwerveMath.calculateDegreesPerSteeringRotation(4.66, Constants.STEER_ENCODER_RESOLUTION);
+    double driveConversionFactor = SwerveMath.calculateMetersPerRotation(Units.inchesToMeters(3.7), 6.63, 1);
+    double steeringConversionFactor = SwerveMath.calculateDegreesPerSteeringRotation(4.66, Constants.STEER_ENCODER_RESOLUTION);
 
 
     try
@@ -99,7 +99,7 @@ public class SwerveSubsystem extends SubsystemBase
                                                0.1); //Correct for skew that gets worse as angular velocity increases. Start with a coefficient of 0.1.
     swerveDrive.setModuleEncoderAutoSynchronize(false,
                                                 1); // Enable if you want to resynchronize your absolute encoders and motor encoders periodically when they are not moving.
-//    swerveDrive.pushOffsetsToEncoders(); // Set the absolute encoder to be used over the internal encoder and push the offsets onto it. Throws warning if not possible
+    //swerveDrive.pushOffsetsToEncoders(); // Set the absolute encoder to be used over the internal encoder and push the offsets onto it. Throws warning if not possible
     if (visionDriveTest)
     {
       setupPhotonVision();

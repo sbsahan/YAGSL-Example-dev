@@ -65,7 +65,7 @@ public class TalonSRXSwerve extends SwerveMotor
     this.isDriveMotor = isDriveMotor;
     this.motor = motor;
     this.simMotor = motorType;
-    motor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+    motor.configSelectedFeedbackSensor(FeedbackDevice.PulseWidthEncodedPosition);
 
     factoryDefaults();
     clearStickyFaults();

@@ -224,7 +224,7 @@ public class DeviceJson
       case "krakenx60foc":
         return new TalonFXSwerve(id, canbus != null ? canbus : "", isDriveMotor, DCMotor.getKrakenX60Foc(1));
       case "talonsrx":
-        return new TalonSRXSwerve(id, isDriveMotor, DCMotor.getCIM(1));
+        return new TalonSRXSwerve(id, isDriveMotor, DCMotor.getVex775Pro(1));
       case "sparkmax_brushed":
         if (canbus == null)
         {
