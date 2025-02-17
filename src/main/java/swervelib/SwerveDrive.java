@@ -1356,6 +1356,8 @@ public class SwerveDrive implements AutoCloseable
    */
   public SwerveModule[] getModules()
   {
+    System.out.println(swerveDriveConfiguration.modules);
+    System.out.println("modules gotten");
     return swerveDriveConfiguration.modules;
   }
 

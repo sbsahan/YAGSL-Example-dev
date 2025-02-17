@@ -617,6 +617,7 @@ public class SwerveModule implements AutoCloseable
    */
   public void setAngle(double angle)
   {
+    System.out.println("angle set");
     angleMotor.setReference(angle, 0);
     lastState.angle = Rotation2d.fromDegrees(angle);
   }
