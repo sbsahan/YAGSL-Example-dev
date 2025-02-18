@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import edu.wpi.first.math.geometry.Translation3d;
 import swervelib.math.Matter;
 
@@ -23,7 +26,7 @@ public final class Constants
   public static final double MAX_SPEED  = 4.3048333;
   public static final Matter CHASSIS = new Matter(new Translation3d(0, 0, 2), ROBOT_MASS);
   public static final double STEER_ENCODER_RESOLUTION = 4096;
-
+  public static final double OFFSETS[] = {15.182, 69.746, 5.903, 24.085};
 //  public static final class AutonConstants
 //  {
 //

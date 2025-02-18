@@ -32,7 +32,7 @@ public class TalonSRXEncoderSwerve extends SwerveAbsoluteEncoder
     {
       talonSRXSwerve.setSelectedFeedbackDevice(feedbackDevice);
       this.talon = (WPI_TalonSRX) talonSRXSwerve.getMotor();
-      talon.configFeedbackNotContinuous(true, 0);
+      talon.configFeedbackNotContinuous(false, 0);
       // https://v5.docs.ctr-electronics.com/en/stable/ch14_MCSensor.html#sensor-resolution
       degreesPerSensorUnit = switch (feedbackDevice)
       
@@ -40,6 +40,7 @@ public class TalonSRXEncoderSwerve extends SwerveAbsoluteEncoder
         case Analog -> 360.0 / 1024.0;
         default -> (360.0 / 4096.0)*(1/4.66);
       };
+      talon.setSelectedSensorPosition(0);
     } else
     {
       throw new RuntimeException("Motor given to instantiate TalonSRXEncoder is not a WPI_TalonSRX");

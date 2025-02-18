@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.math.system.plant.DCMotor;
 import swervelib.encoders.SwerveAbsoluteEncoder;
+import swervelib.encoders.TalonSRXEncoderSwerve;
 import swervelib.math.SwerveMath;
 import swervelib.parser.PIDFConfig;
 import swervelib.parser.json.modules.ConversionFactorsJson;
@@ -31,94 +32,95 @@ public class TalonSRXSwerve extends SwerveMotor
   /**
    * Whether the absolute encoder is integrated.
    */
-  private final boolean               absoluteEncoder          = false;
-  /**
-   * TalonSRX motor controller.
-   */
-  private final WPI_TalonSRX          motor;
-  /**
-   * The position conversion factor to convert raw sensor units to Meters Per 100ms, or Ticks to Degrees.
-   */
-  private       double                positionConversionFactor = 1;
-  /**
-   * Module Conversion factors to use.
-   */
-  private       ConversionFactorsJson moduleConversionFactors;
-  /**
-   * If the TalonSRX configuration has changed.
-   */
-  private       boolean               configChanged            = true;
-  /**
-   * Nominal voltage default to use with feedforward.
-   */
-  private       double                nominalVoltage           = 12.0;
-
-  /**
-   * Constructor for TalonSRX swerve motor.
-   *
-   * @param motor        Motor to use.
-   * @param isDriveMotor Whether this motor is a drive motor.
-   * @param motorType    {@link DCMotor} which the {@link WPI_TalonSRX} is attached to.
-   */
-  public TalonSRXSwerve(WPI_TalonSRX motor, boolean isDriveMotor, DCMotor motorType)
-  {
-    this.isDriveMotor = isDriveMotor;
-    this.motor = motor;
-    this.simMotor = motorType;
-    motor.configSelectedFeedbackSensor(FeedbackDevice.PulseWidthEncodedPosition);
-
-    factoryDefaults();
-    clearStickyFaults();
-
-  }
-
-  /**
-   * Construct the TalonSRX swerve motor given the ID.
-   *
-   * @param id           ID of the TalonSRX on the canbus.
-   * @param isDriveMotor Whether the motor is a drive or steering motor.
-   * @param motorType    {@link DCMotor} which the {@link WPI_TalonSRX} is attached to.
-   */
-  public TalonSRXSwerve(int id, boolean isDriveMotor, DCMotor motorType)
-  {
-    this(new WPI_TalonSRX(id), isDriveMotor, motorType);
-  }
-
-  @Override
-  public void close() {
-    motor.close();
-  }
-
-  /**
-   * Configure the factory defaults.
-   */
-  @Override
-  public void factoryDefaults()
-  {
-    if (!factoryDefaultOccurred)
+  private boolean               absoluteEncoder          = false;
+    /**
+     * TalonSRX motor controller.
+     */
+    private final WPI_TalonSRX          motor;
+    /**
+     * The position conversion factor to convert raw sensor units to Meters Per 100ms, or Ticks to Degrees.
+     */
+    private       double                positionConversionFactor = 1;
+    /**
+     * Module Conversion factors to use.
+     */
+    private       ConversionFactorsJson moduleConversionFactors;
+    /**
+     * If the TalonSRX configuration has changed.
+     */
+    private       boolean               configChanged            = true;
+    /**
+     * Nominal voltage default to use with feedforward.
+     */
+    private       double                nominalVoltage           = 12.0;
+  
+    /**
+     * Constructor for TalonSRX swerve motor.
+     *
+     * @param motor        Motor to use.
+     * @param isDriveMotor Whether this motor is a drive motor.
+     * @param motorType    {@link DCMotor} which the {@link WPI_TalonSRX} is attached to.
+     */
+    public TalonSRXSwerve(WPI_TalonSRX motor, boolean isDriveMotor, DCMotor motorType)
     {
-      motor.configFactoryDefault();
-      motor.setSensorPhase(true);
+      this.isDriveMotor = isDriveMotor;
+      this.motor = motor;
+      this.simMotor = motorType;
+      motor.configSelectedFeedbackSensor(FeedbackDevice.PulseWidthEncodedPosition);
+  
+      factoryDefaults();
+      clearStickyFaults();
+  
     }
-  }
-
-  /**
-   * Clear the sticky faults on the motor controller.
-   */
-  @Override
-  public void clearStickyFaults()
-  {
-    motor.clearStickyFaults();
-  }
-
-  /**
-   * Set the absolute encoder to be a compatible absolute encoder.
-   *
-   * @param encoder The encoder to use.
-   */
-  @Override
-  public SwerveMotor setAbsoluteEncoder(SwerveAbsoluteEncoder encoder)
-  {
+  
+    /**
+     * Construct the TalonSRX swerve motor given the ID.
+     *
+     * @param id           ID of the TalonSRX on the canbus.
+     * @param isDriveMotor Whether the motor is a drive or steering motor.
+     * @param motorType    {@link DCMotor} which the {@link WPI_TalonSRX} is attached to.
+     */
+    public TalonSRXSwerve(int id, boolean isDriveMotor, DCMotor motorType)
+    {
+      this(new WPI_TalonSRX(id), isDriveMotor, motorType);
+    }
+  
+    @Override
+    public void close() {
+      motor.close();
+    }
+  
+    /**
+     * Configure the factory defaults.
+     */
+    @Override
+    public void factoryDefaults()
+    {
+      if (!factoryDefaultOccurred)
+      {
+        motor.configFactoryDefault();
+        motor.setSensorPhase(true);
+      }
+    }
+  
+    /**
+     * Clear the sticky faults on the motor controller.
+     */
+    @Override
+    public void clearStickyFaults()
+    {
+      motor.clearStickyFaults();
+    }
+  
+    /**
+     * Set the absolute encoder to be a compatible absolute encoder.
+     *
+     * @param encoder The encoder to use.
+     */
+    @Override
+    public SwerveMotor setAbsoluteEncoder(SwerveAbsoluteEncoder encoder)
+    {
+      absoluteEncoder = encoder instanceof TalonSRXEncoderSwerve;
     // Do not support.
     return this;
   }

@@ -93,6 +93,7 @@ public class SwerveSubsystem extends SubsystemBase
     {
       throw new RuntimeException(e);
     }
+    swerveDrive.useExternalFeedbackSensor();
     swerveDrive.setHeadingCorrection(false); // Heading correction should only be used while controlling the robot via angle.
     swerveDrive.setCosineCompensator(false);//!SwerveDriveTelemetry.isSimulation); // Disables cosine compensation for simulations since it causes discrepancies not seen in real life.
     swerveDrive.setAngularVelocityCompensation(true,
@@ -557,6 +558,21 @@ public class SwerveSubsystem extends SubsystemBase
   public void postTrajectory(Trajectory trajectory)
   {
     swerveDrive.postTrajectory(trajectory);
+  }
+
+  public Command driveCommand(DoubleSupplier translationX, DoubleSupplier translationY, DoubleSupplier angularRotationX, boolean fieldRelative, boolean openLoop)
+  {
+    return run(() -> {
+      // Make the robot drive
+      swerveDrive.drive(
+        new Translation2d(
+          translationX.getAsDouble() * swerveDrive.getMaximumChassisVelocity(),
+          translationY.getAsDouble() * swerveDrive.getMaximumChassisVelocity()
+        ),
+        angularRotationX.getAsDouble() * swerveDrive.getMaximumChassisAngularVelocity(),
+        fieldRelative,
+        openLoop);
+    });
   }
 
   /**
