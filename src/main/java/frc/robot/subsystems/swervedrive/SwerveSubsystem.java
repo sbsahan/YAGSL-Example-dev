@@ -58,74 +58,29 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SwerveSubsystem extends SubsystemBase
 {
-
-  /**
-   * Swerve drive object.
-   */
   private final SwerveDrive         swerveDrive;
-  /**
-   * Enable vision odometry updates while driving.
-   */
+
   private final boolean             visionDriveTest     = false;
-  /**
-   * PhotonVision class to keep an accurate odometry.
-   */
+
   private Vision vision;
 
-  /**
-   * Initialize {@link SwerveDrive} with the directory provided.
-   *
-   * @param src\main\deploy\swerve\talonsrx Directory of swerve drive config files.
-   */
+
   public SwerveSubsystem(File directory)
   {
-    // Configure the Telemetry before creating the SwerveDrive to avoid unnecessary objects being created.
     SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
-    double driveConversionFactor = SwerveMath.calculateMetersPerRotation(Units.inchesToMeters(3.7), 6.63, 1);
-    double steeringConversionFactor = SwerveMath.calculateDegreesPerSteeringRotation(4.66, Constants.STEER_ENCODER_RESOLUTION);
-
-
+    
     try
     {
-      
       swerveDrive = new SwerveParser(directory).createSwerveDrive(Constants.MAX_SPEED);
     } catch (Exception e)
     {
       throw new RuntimeException(e);
     }
     swerveDrive.useExternalFeedbackSensor();
-    swerveDrive.setHeadingCorrection(false); // Heading correction should only be used while controlling the robot via angle.
-    swerveDrive.setCosineCompensator(false);//!SwerveDriveTelemetry.isSimulation); // Disables cosine compensation for simulations since it causes discrepancies not seen in real life.
-    swerveDrive.setAngularVelocityCompensation(true,
-                                               true,
-                                               0.1); //Correct for skew that gets worse as angular velocity increases. Start with a coefficient of 0.1.
-    swerveDrive.setModuleEncoderAutoSynchronize(false,
-                                                0.01); // Enable if you want to resynchronize your absolute encoders and motor encoders periodically when they are not moving.
-    //swerveDrive.pushOffsetsToEncoders(); // Set the absolute encoder to be used over the internal encoder and push the offsets onto it. Throws warning if not possible
-    if (visionDriveTest)
-    {
-      setupPhotonVision();
-      // Stop the odometry thread if we are using vision that way we can synchronize updates better.
-      swerveDrive.stopOdometryThread();
-    }
     setupPathPlanner();
   }
 
-  /**
-   * Construct the swerve drive.
-   *
-   * @param driveCfg      SwerveDriveConfiguration for the swerve.
-   * @param controllerCfg Swerve Controller.
-   */
-  public SwerveSubsystem(SwerveDriveConfiguration driveCfg, SwerveControllerConfiguration controllerCfg)
-  {
-    swerveDrive = new SwerveDrive(driveCfg,
-                                  controllerCfg,
-                                  Constants.MAX_SPEED,
-                                  new Pose2d(new Translation2d(Meter.of(2), Meter.of(0)),
-                                             Rotation2d.fromDegrees(0)));
-  }
-
+  
   /**
    * Setup the photon vision class.
    */
@@ -370,12 +325,10 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public Command centerModulesCommand()
   {
-    System.out.println("centered");
-    
+
     return run(() -> Arrays.asList(swerveDrive.getModules())
                            .forEach(it -> it.setAngle(0.0)));
-        
-    
+
   }
 
   /**

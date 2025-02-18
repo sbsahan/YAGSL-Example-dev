@@ -44,8 +44,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Constants;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -1358,8 +1356,6 @@ public class SwerveDrive implements AutoCloseable
    */
   public SwerveModule[] getModules()
   {
-    System.out.println(swerveDriveConfiguration.modules);
-    System.out.println("modules gotten");
     return swerveDriveConfiguration.modules;
   }
 

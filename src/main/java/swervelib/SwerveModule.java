@@ -17,7 +17,6 @@ import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Constants;
 import swervelib.encoders.SparkMaxEncoderSwerve;
 import swervelib.encoders.SwerveAbsoluteEncoder;
 import swervelib.math.SwerveMath;
@@ -618,7 +617,6 @@ public class SwerveModule implements AutoCloseable
    */
   public void setAngle(double angle)
   {
-    System.out.println("angle set");
     angleMotor.setReference(angle, 0);
     lastState.angle = Rotation2d.fromDegrees(angle);
   }
