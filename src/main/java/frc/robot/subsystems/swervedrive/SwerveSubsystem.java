@@ -31,6 +31,9 @@ import swervelib.parser.SwerveParser;
 import swervelib.telemetry.SwerveDriveTelemetry;
 import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 
+//TODO: cleanup unused commands also get it to work :(
+//added change in TalonSRXEncoder.java, setAbsoluteEncoderOffset() to prevent double offsetting; needs to be tested
+
 public class SwerveSubsystem extends SubsystemBase {
 
   private final SwerveDrive swerveDrive;

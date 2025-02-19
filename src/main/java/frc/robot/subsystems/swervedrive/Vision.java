@@ -41,6 +41,8 @@ import org.photonvision.targeting.PhotonTrackedTarget;
 import swervelib.SwerveDrive;
 import swervelib.telemetry.SwerveDriveTelemetry;
 
+//TODO: NEEDS TO BE SWITCHED OVER TO USE LIMELIGHT!!
+//KEEPING FOR REFERENCE, WILL ADD NEW SUBSYSTEM
 
 /**
  * Example PhotonVision class to aid in the pursuit of accurate odometry. Taken from
