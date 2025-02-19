@@ -40,7 +40,7 @@ public class TalonSRXEncoderSwerve extends SwerveAbsoluteEncoder
         case Analog -> 360.0 / 1024.0;
         default -> (360.0 / 4096.0)*(1/4.66);
       };
-      talon.setSelectedSensorPosition(0);
+      //talon.setSelectedSensorPosition(0);
     } else
     {
       throw new RuntimeException("Motor given to instantiate TalonSRXEncoder is not a WPI_TalonSRX");
@@ -89,7 +89,7 @@ public class TalonSRXEncoderSwerve extends SwerveAbsoluteEncoder
   @Override
   public boolean setAbsoluteEncoderOffset(double offset)
   {
-    talon.setSelectedSensorPosition(talon.getSelectedSensorPosition() + offset / degreesPerSensorUnit);
+    talon.setSelectedSensorPosition(offset / degreesPerSensorUnit);
     return true;
   }
 
