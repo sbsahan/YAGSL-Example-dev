@@ -6,7 +6,7 @@
   },
   "angle": {
     "type": "talonsrx",
-    "id": 8,
+    "id": 6,
     "canbus": null
   },
   "encoder": {
