@@ -46,7 +46,7 @@ public class SwerveSubsystem extends SubsystemBase {
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
-    swerveDrive.useExternalFeedbackSensor();
+    //swerveDrive.useExternalFeedbackSensor();
     setupPathPlanner();
   }
 
