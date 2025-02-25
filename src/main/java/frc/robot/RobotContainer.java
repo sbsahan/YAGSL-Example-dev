@@ -11,7 +11,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.subsystems.swervedrive.Elevator;
+import frc.robot.commands.ElevatorManual;
+import frc.robot.commands.ElevatorToLevel;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
 
@@ -37,6 +39,7 @@ public class RobotContainer {
         false, 
         false);
   
+  //Command manualElevator = m_elevator.setManual(driverPS4.getRawAxis(5));
   //Command testElevator = m_elevator.elevatorTest();
   /*changed commands, 
   removed sim & test for better readability, 
@@ -51,11 +54,15 @@ public class RobotContainer {
 
   private void configureBindings() {
     drivebase.setDefaultCommand(driveFieldOriented);
+    m_elevator.setDefaultCommand(new ElevatorManual(m_elevator, driverPS4::getRightY));
     //driverPS4.button(1).onTrue((Commands.runOnce(drivebase::zeroGyro)));
     //driverPS4.circle().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
-    driverPS4.triangle().onTrue(Commands.runOnce(m_elevator::elevatorPosOne, m_elevator));
-    driverPS4.button(3).onTrue(Commands.runOnce(m_elevator::elevatorReset, m_elevator)); //square
-  }
+    driverPS4.button(3).onTrue(new ElevatorToLevel(m_elevator, 1)); //square
+    driverPS4.button(4).onTrue(new ElevatorToLevel(m_elevator, 2)); //triangle
+    driverPS4.button(2).onTrue(new ElevatorToLevel(m_elevator, 3)); //circle
+    driverPS4.button(1).onTrue(new ElevatorToLevel(m_elevator, 0)); //cross
+    driverPS4.button(6).onTrue(Commands.runOnce(m_elevator::resetPosition));
+   }
 
   public Command getAutonomousCommand() {
     return drivebase.getAutonomousCommand("New Auto");

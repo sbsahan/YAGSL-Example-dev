@@ -1,12 +1,14 @@
-package frc.robot.subsystems.swervedrive;
+package frc.robot.subsystems;
+
+import java.util.function.DoubleSupplier;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.LevelConstants;
 
 //TODO: add commands to set height for scoring [1, 2, 3]
 
@@ -15,6 +17,7 @@ public class Elevator extends SubsystemBase{
     TalonFX elevatorMotor1; //changed based on motor type
     TalonFX elevatorMotor2;
 
+    MotionMagicVoltage m_request = new MotionMagicVoltage(0);
     TalonFXConfiguration talonFXConfigs = new TalonFXConfiguration();
 
     public Elevator(int motorID1, int motorID2){
@@ -39,19 +42,32 @@ public class Elevator extends SubsystemBase{
     
     }
     
-    public void elevatorPosOne(){
-        final MotionMagicVoltage m_request = new MotionMagicVoltage(0);
-        elevatorMotor1.setControl(m_request.withPosition(10));
+    public void elevatorToPosition(double position){
+        elevatorMotor1.setControl(m_request.withPosition(position));
     }
 
-    public void elevatorPosTwo(){
-        final MotionMagicVoltage m_request = new MotionMagicVoltage(0);
-        elevatorMotor1.setControl(m_request.withPosition(20));
+    public void setManual(double speed) {
+        elevatorMotor1.set(speed);
     }
 
-    public void elevatorReset(){
-        elevatorMotor1.setPosition(0);
-        System.out.println("worked!");
+    public void resetPosition(){
+        elevatorMotor1.setPosition(0, 0);
+    }
+
+    public Command L0() {
+        return run(() -> {elevatorToPosition(LevelConstants.L0);});
+    }
+
+    public Command L1() {
+        return run(() -> {elevatorToPosition(LevelConstants.L1);});
+    }
+
+    public Command L2() {
+        return run(() -> {elevatorToPosition(LevelConstants.L2);});
+    }
+
+    public Command L3() {
+        return run(() -> {elevatorToPosition(LevelConstants.L3);});
     }
 
 }

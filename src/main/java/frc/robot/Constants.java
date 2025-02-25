@@ -29,4 +29,12 @@ public final class Constants
     public static final double RIGHT_X_DEADBAND = 0.1;
     public static final double TURN_CONSTANT    = 6;
   }
+
+  public static class LevelConstants
+  {
+    public static final double L0 = 0;
+    public static final double L1 = 10;
+    public static final double L2 = 20;
+    public static final double L3 = 30;
+  }
 }
