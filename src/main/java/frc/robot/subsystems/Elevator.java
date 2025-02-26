@@ -7,6 +7,7 @@ import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LevelConstants;
 
@@ -42,8 +43,8 @@ public class Elevator extends SubsystemBase{
     
     }
     
-    public void elevatorToPosition(double position){
-        elevatorMotor1.setControl(m_request.withPosition(position));
+    public Command elevatorToPosition(double position){
+        return Commands.runOnce(() -> elevatorMotor1.setControl(m_request.withPosition(position)));
     }
 
     public void setManual(double speed) {
@@ -55,19 +56,19 @@ public class Elevator extends SubsystemBase{
     }
 
     public Command L0() {
-        return run(() -> {elevatorToPosition(LevelConstants.L0);});
+        return elevatorToPosition(LevelConstants.L0);
     }
 
     public Command L1() {
-        return run(() -> {elevatorToPosition(LevelConstants.L1);});
+        return elevatorToPosition(LevelConstants.L1);
     }
 
     public Command L2() {
-        return run(() -> {elevatorToPosition(LevelConstants.L2);});
+        return elevatorToPosition(LevelConstants.L2);
     }
 
     public Command L3() {
-        return run(() -> {elevatorToPosition(LevelConstants.L3);});
+        return elevatorToPosition(LevelConstants.L3);
     }
 
 }

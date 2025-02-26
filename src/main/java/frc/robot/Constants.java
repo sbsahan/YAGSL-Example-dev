@@ -6,9 +6,9 @@ package frc.robot;
 public final class Constants
 {
 
-  public static final double ROBOT_MASS = 17;
+  public static final double ROBOT_MASS = 37;
   public static final double LOOP_TIME  = 0.13; 
-  public static final double MAX_SPEED  = 4.3048333;
+  public static final double MAX_SPEED  = 1.8;
 
 //  public static final class AutonConstants
 //  {
@@ -37,4 +37,10 @@ public final class Constants
     public static final double L2 = 20;
     public static final double L3 = 30;
   }
+
+  public static class VisionConstants
+  {
+    public static final double kP = 10;
+  }
+  
 }
