@@ -4,13 +4,16 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Elevator;
 
 public class ElevatorToLevel extends Command {
+    
     private Elevator m_elevatorSubsystem;
     private int e_level;
+    
     public ElevatorToLevel(Elevator system, int level) {
         m_elevatorSubsystem = system;
         e_level = level;
         addRequirements(system);
     }
+    
     @Override
     public void initialize(){
         switch (e_level) {

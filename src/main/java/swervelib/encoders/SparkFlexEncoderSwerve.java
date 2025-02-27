@@ -1,13 +1,11 @@
 package swervelib.encoders;
 
 import com.revrobotics.AbsoluteEncoder;
-import com.revrobotics.REVLibError;
 import com.revrobotics.spark.SparkAbsoluteEncoder;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.config.SparkFlexConfig;
 import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.Alert.AlertType;
-import java.util.function.Supplier;
 import swervelib.motors.SparkFlexSwerve;
 import swervelib.motors.SwerveMotor;
 

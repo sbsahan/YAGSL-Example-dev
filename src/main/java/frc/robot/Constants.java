@@ -40,6 +40,9 @@ public final class Constants
 
   public static class VisionConstants
   {
+    public static final double TX_GOAL_RIGHT = -17;
+    public static final double TX_GOAL_LEFT = -17;
+    public static final double TA_GOAL = 6;
     public static final double kP = 10;
   }
   

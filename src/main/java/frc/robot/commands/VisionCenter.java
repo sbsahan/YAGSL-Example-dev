@@ -1,45 +1,30 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.LimelightHelpers;
-import frc.robot.Constants.VisionConstants;
+import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 
 public class VisionCenter extends Command {
     SwerveSubsystem v_swerveSubsystem;
-    double tx, ta;
-    boolean a = true;
+    Vision v_ll;
     
-    public VisionCenter(SwerveSubsystem system){
+    public VisionCenter(SwerveSubsystem system, Vision ll){
         v_swerveSubsystem = system;
-        addRequirements(v_swerveSubsystem, system);
-        
+        v_ll = ll;
+        addRequirements(system, ll);
     }
 
     @Override
     public void execute(){
-        
-        tx = LimelightHelpers.getTX("");
-        ta = LimelightHelpers.getTA("");
-        double xCorrection = tx * VisionConstants.kP;
-        double yCorrection = ta * VisionConstants.kP;
-        v_swerveSubsystem.drive(new ChassisSpeeds(xCorrection, yCorrection, 0));
-        SmartDashboard.putNumber("correctionX", xCorrection);
-        SmartDashboard.putNumber("correctionY", yCorrection);
-        SmartDashboard.putNumber("valueX", LimelightHelpers.getTX(""));
-        SmartDashboard.putNumber("valueY", ta);
+        v_ll.updateValues();
+        v_swerveSubsystem.drive(new ChassisSpeeds(v_ll.getX_Correction(), v_ll.getY_Correction(), 0));
+        v_ll.publishValues();
         System.out.println("centering");
-        //if(tx == 0 && ta == 10) {
-            //a = false;
-        //}
-        
     }
 
     @Override
     public boolean isFinished(){
-        return !a;
+        return true;
     }
 }
