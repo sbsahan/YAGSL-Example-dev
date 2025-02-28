@@ -3,65 +3,77 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.LimelightHelpers;
-import frc.robot.Constants.VisionConstants;
 
 public class Vision extends SubsystemBase {
-    String v_name, v_side;
-    int v_pipeline;
-    double tx, ta, X_Correction, Y_Correction;
-
-    
-    public Vision(String name, String side){
-        v_name = name;
-        v_side = side;
-        // tx = LimelightHelpers.getTX(v_name);
-        // ty = LimelightHelpers.getTY(v_name);
-        // ta = LimelightHelpers.getTA(v_name);
+    private final String limelightName;
+    private final String side;
+   
+    // Raw limelight values
+    private double tx;
+    private double ty;
+    private double ta;
+   
+    // The calibrated values for alignment positions (will be set during calibration)
+    private static final double TX_LEFT_POSITION = -14.1;  // REPLACE with measured value
+    private static final double TX_RIGHT_POSITION = 1.9;  // REPLACE with measured value
+    private static final double TA_TARGET_DISTANCE = 1.45; // REPLACE with measured value
+   
+    public Vision(String name, String side) {
+        this.limelightName = name;
+        this.side = side;
     }
-
-    public void updateValues(){
-        tx = LimelightHelpers.getTX(v_name);
-        ta = LimelightHelpers.getTA(v_name);
+   
+    @Override
+    public void periodic() {
+        // Update values every periodic cycle
+        updateValues();
+       
+        // Publish to SmartDashboard for debugging
+        SmartDashboard.putNumber(side + "_tx", tx);
+        SmartDashboard.putNumber(side + "_ty", ty);
+        SmartDashboard.putNumber(side + "_ta", ta);
+        SmartDashboard.putBoolean(side + "_hasTarget", hasTarget());
     }
-
-    public void publishValues(){
-        SmartDashboard.putNumber(v_name + "tx", tx);
-        SmartDashboard.putNumber(v_name + "ta", ta);
+   
+    public void updateValues() {
+        tx = LimelightHelpers.getTX(limelightName);
+        ty = LimelightHelpers.getTY(limelightName);
+        ta = LimelightHelpers.getTA(limelightName);
     }
-
-    public void calculateCorrection(){
-        double x_Correction;
-        double y_Correction = (VisionConstants.TA_GOAL - ta) * VisionConstants.kP;
-        switch (v_side) {
-            case "left":
-                x_Correction = (VisionConstants.TX_GOAL_LEFT - tx) * VisionConstants.kP;
-                break;
-
-            case "right":
-                x_Correction = (VisionConstants.TX_GOAL_RIGHT - tx) * VisionConstants.kP;
-                break;
-
-            default:
-                System.out.println("aw hell naw dawg");
-                x_Correction = 0;
-        }
-        X_Correction = x_Correction;
-        Y_Correction = y_Correction;
+   
+    public boolean hasTarget() {
+        return LimelightHelpers.getTV(limelightName);
     }
-
-    public double getTX(){
+   
+    public double getTx() {
         return tx;
     }
-
-    public double getTA(){
+   
+    public double getTy() {
+        return ty;
+    }
+   
+    public double getTa() {
         return ta;
     }
-
-    public double getX_Correction(){
-        return X_Correction;
+   
+    public String getLimelightName() {
+        return limelightName;
     }
-
-    public double getY_Correction(){
-        return Y_Correction;
+   
+    // Get the target tx value for a specific position
+    public static double getTargetTx(String position) {
+        if ("left".equals(position)) {
+            return TX_LEFT_POSITION;
+        } else if ("right".equals(position)) {
+            return TX_RIGHT_POSITION;
+        } else {
+            return 0.0; // Center
+        }
+    }
+   
+    // Get the target area for the desired distance
+    public static double getTargetArea() {
+        return TA_TARGET_DISTANCE;
     }
 }

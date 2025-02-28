@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.ElevatorManual;
 import frc.robot.commands.ElevatorToLevel;
-import frc.robot.commands.VisionCenter;
+import frc.robot.commands.SimpleAprilTagAlign;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
@@ -27,7 +27,7 @@ public class RobotContainer {
       new File(Filesystem.getDeployDirectory(), "swerve/talonsrx"));
 
   final Elevator m_elevator = new Elevator(10, 11);
-  final Vision v_right = new Vision("", "right");
+  final Vision v_ll = new Vision("", "right");
 
   Command driveFieldOriented = drivebase.driveCommand(
       () -> MathUtil.applyDeadband(driverPS4.getLeftY() * -1, OperatorConstants.DEADBAND),
@@ -48,13 +48,10 @@ public class RobotContainer {
   Command elevatorL2 = new ElevatorToLevel(m_elevator, 2);
   Command elevatorL3 = new ElevatorToLevel(m_elevator, 3);
   Command elevatorL0 = new ElevatorToLevel(m_elevator, 0);
-  Command centered = new VisionCenter(drivebase, v_right);
-  //Command manualElevator = m_elevator.setManual(driverPS4.getRawAxis(5));
-  //Command testElevator = m_elevator.elevatorTest();
-  /*changed commands, 
-  removed sim & test for better readability, 
-  if needed revert back to old vers. or copy from yagsl-example
-  */
+
+  Command alignLeft = new SimpleAprilTagAlign(drivebase, v_ll, "left");
+  Command alignRight = new SimpleAprilTagAlign(drivebase, v_ll, "right");
+  
 
   public RobotContainer() {
     configureBindings();
@@ -64,15 +61,17 @@ public class RobotContainer {
 
   private void configureBindings() {
     drivebase.setDefaultCommand(driveRobotOriented);
-    //m_elevator.setDefaultCommand(elevatorDefault);
-    //driverPS4.button(1).onTrue((Commands.runOnce(drivebase::zeroGyro)));
-    //driverPS4.circle().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
+
+    //Elevator controls
     driverPS4.button(3).onTrue(elevatorL1); //square
     driverPS4.button(4).onTrue(elevatorL2); //triangle
     driverPS4.button(2).onTrue(elevatorL3); //circle
     driverPS4.button(1).onTrue(elevatorL0); //cross
-    driverPS4.button(6).onTrue(Commands.runOnce(m_elevator::resetPosition));
-    driverPS4.button(5).onTrue(new VisionCenter(drivebase, v_right));
+    driverPS4.button(8).onTrue(Commands.runOnce(m_elevator::resetPosition));
+
+    //AprilTag alignment w/ shoulder buttons
+    driverPS4.L1().whileTrue(alignLeft);
+    driverPS4.R1().whileTrue(alignRight);
    }
 
   public Command getAutonomousCommand() {
