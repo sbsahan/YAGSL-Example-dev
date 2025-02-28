@@ -45,5 +45,11 @@ public final class Constants
     public static final double TA_GOAL = 6;
     public static final double kP = 10;
   }
+
+  public static class IntakeConstants
+  {
+    public static final double INTAKE_ARM_POSITION = 1;
+    public static final double INTAKE_RESET_POSITION = 0.5;
+  }
   
 }

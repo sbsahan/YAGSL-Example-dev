@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.ElevatorManual;
-import frc.robot.commands.ElevatorToLevel;
 import frc.robot.commands.SimpleAprilTagAlign;
+import frc.robot.commands.elevator.ElevatorManual;
+import frc.robot.commands.elevator.ElevatorToLevel;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
@@ -32,14 +32,14 @@ public class RobotContainer {
   Command driveFieldOriented = drivebase.driveCommand(
       () -> MathUtil.applyDeadband(driverPS4.getLeftY() * -1, OperatorConstants.DEADBAND),
       () -> MathUtil.applyDeadband(driverPS4.getLeftX() * -1, OperatorConstants.DEADBAND),
-      () -> MathUtil.applyDeadband(driverPS4.getRightX() * -1, OperatorConstants.DEADBAND),
+      () -> MathUtil.applyDeadband(driverPS4.getRawAxis(4) * -1, OperatorConstants.DEADBAND),
         true, 
         false);
   
   Command driveRobotOriented = drivebase.driveCommand(
       () -> MathUtil.applyDeadband(driverPS4.getLeftY() * -1, OperatorConstants.DEADBAND),
       () -> MathUtil.applyDeadband(driverPS4.getLeftX() * -1, OperatorConstants.DEADBAND),
-      () -> MathUtil.applyDeadband(driverPS4.getRightX() * -1, OperatorConstants.DEADBAND),
+      () -> MathUtil.applyDeadband(driverPS4.getRawAxis(4) * -1, OperatorConstants.DEADBAND),
         false, 
         false);
   
